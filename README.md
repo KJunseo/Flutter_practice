@@ -1,2 +1,2 @@
 # Flutter_practice
-Flutter stadu
+Flutter study
