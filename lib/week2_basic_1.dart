@@ -1,0 +1,88 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    final appName = 'Custom Themes';
+
+    return MaterialApp(
+      title: appName,
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.dark,
+        primaryColor: Colors.lightBlue[800],
+        accentColor: Colors.cyan[600],
+
+        // Define the default font family.
+        fontFamily: 'Montserrat',
+
+        // Define the default TextTheme. Use this to specify the default
+        // text styling for headlines, titles, bodies of text, and more.
+        textTheme: TextTheme(
+          headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          title: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
+          body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        ),
+      ),
+      home: MyHomePage(
+        title: appName,
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldstate = new GlobalKey<ScaffoldState>();
+  final String title;
+  final snackBar = SnackBar(
+    content: Text('HonerCode!'),
+    action: SnackBarAction(
+      label: 'Undo',
+      onPressed: () {
+        // Some code to undo the change.
+      },
+    ),
+  );
+
+  MyHomePage({Key key, @required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldstate,
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Center(
+        child: Container(
+          color: Theme.of(context).accentColor,
+          child: Text(
+            'Text with a background color',
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+      ),
+      floatingActionButton: Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme:
+          Theme.of(context).colorScheme.copyWith(secondary: Colors.green),
+        ),
+        child: FloatingActionButton(
+          onPressed: (){
+            _scaffoldstate.currentState.showSnackBar(snackBar);
+          },
+          child: Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}
+
